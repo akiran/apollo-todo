@@ -1,7 +1,7 @@
 import React from 'react'
 import {graphql} from 'react-apollo'
-import gql from 'graphql-tag'
 import Todo from './Todo'
+import {todosQuery} from '../data/queries'
 
 class TodoList extends React.Component {
   render() {
@@ -14,14 +14,5 @@ class TodoList extends React.Component {
     )
   }
 }
-
-const todosQuery = gql`
-  {
-    todos @client {
-      id
-      title
-    }
-  }
-`
 
 export default graphql(todosQuery)(TodoList)

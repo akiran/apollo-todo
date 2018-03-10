@@ -1,4 +1,6 @@
 import React from 'react'
+import gql from 'graphql-tag'
+import {graphql} from 'react-apollo'
 
 class TodoForm extends React.Component {
   constructor(props) {
@@ -16,6 +18,9 @@ class TodoForm extends React.Component {
     if (e.key !== 'Enter') {
       return
     }
+    this.props.mutate({
+      variables: {title: this.state.title}
+    })
     this.setState({
       title: ''
     })
@@ -34,4 +39,10 @@ class TodoForm extends React.Component {
   }
 }
 
-export default TodoForm
+const addTodoMutation = gql`
+  mutation addTodoMutation($title: String) {
+    addTodo(title: $title) @client
+  }
+`
+
+export default graphql(addTodoMutation)(TodoForm)

@@ -7,3 +7,12 @@ export const detailsQuery = gql`
     }
   }
 `
+
+export const todosQuery = gql`
+  {
+    todos @client {
+      id
+      title
+    }
+  }
+`
