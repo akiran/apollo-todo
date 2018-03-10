@@ -19,6 +19,7 @@ export const todosQuery = gql`
     todos @client {
       id
       title
+      completed
     }
   }
 `

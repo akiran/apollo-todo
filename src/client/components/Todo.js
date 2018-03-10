@@ -1,10 +1,15 @@
 import React from 'react'
 import gql from 'graphql-tag'
-import {graphql} from 'react-apollo'
+import {graphql, compose} from 'react-apollo'
 
 class Todo extends React.Component {
   deleteTodo = () => {
-    this.props.mutate({
+    this.props.deleteTodo({
+      variables: {id: this.props.todo.id}
+    })
+  }
+  toggleTodo = () => {
+    this.props.toggleTodo({
       variables: {id: this.props.todo.id}
     })
   }
@@ -12,6 +17,12 @@ class Todo extends React.Component {
     const {todo} = this.props
     return (
       <div style={{marginBottom: 10}}>
+        <input
+          type='checkbox'
+          checked={todo.completed}
+          onChange={this.toggleTodo}
+          style={{marginRight: 10}}
+        />
         {todo.title}
         <a className='pull-right btn-link' onClick={this.deleteTodo}>
           <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
@@ -27,4 +38,14 @@ const deleteTodoMutation = gql`
   }
 `
 
-export default graphql(deleteTodoMutation)(Todo)
+const toggleTodoMutation = gql`
+  mutation toggleTodoMutation($id: String) {
+    toggleTodo(id: $id) @client
+  }
+`
+
+
+export default compose(
+  graphql(deleteTodoMutation, {name: 'deleteTodo'}),
+  graphql(toggleTodoMutation, {name: 'toggleTodo'})
+)(Todo)
