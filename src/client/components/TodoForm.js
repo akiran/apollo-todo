@@ -15,7 +15,7 @@ class TodoForm extends React.Component {
     })
   }
   addTodo = (e) => {
-    if (e.key !== 'Enter') {
+    if (e.key !== 'Enter' || !this.state.title) {
       return
     }
     this.props.mutate({
