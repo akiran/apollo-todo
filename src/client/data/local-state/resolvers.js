@@ -1,19 +1,17 @@
-import {todosQuery, detailsQuery} from '../queries'
+import gql from 'graphql-tag'
 import uuid from 'uuid'
+
+const todosQuery = gql`
+  {
+    todos @client {
+      id
+      title
+    }
+  }
+`
 
 export default {
   Mutation: {
-    toggleLastName: (_, variables, { cache }) => {
-      const {details} = cache.readQuery({query: detailsQuery})
-      const data = {
-        details: {
-          __typename: 'Details',
-          showLastName: !details.showLastName
-        },
-      };
-      cache.writeData({ data });
-      return null
-    },
     addTodo: (_, variables, { cache }) => {
       console.log('var', variables)
       const {todos} = cache.readQuery({query: todosQuery})
