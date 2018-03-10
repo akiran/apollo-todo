@@ -13,7 +13,6 @@ const todosQuery = gql`
 export default {
   Mutation: {
     addTodo: (_, variables, { cache }) => {
-      console.log('var', variables)
       const {todos} = cache.readQuery({query: todosQuery})
       const data = {
         todos: [{
@@ -24,6 +23,14 @@ export default {
       };
       cache.writeData({ data });
       return null
-    }
+    },
+    deleteTodo: (_, variables, { cache }) => {
+      const {todos} = cache.readQuery({query: todosQuery})
+      const data = {
+        todos: todos.filter(todo => todo.id !== variables.id)
+      };
+      cache.writeData({ data });
+      return null
+    },
   }
 }
