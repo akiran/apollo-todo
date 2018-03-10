@@ -27,9 +27,10 @@ class TodoForm extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div style={{marginTop: 20, marginBottom: 20}}>
         <input
           placeholder='Enter Todo'
+          className='form-control'
           value={this.state.title}
           onKeyDown={this.addTodo}
           onChange={this.setTitle}
